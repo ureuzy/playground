@@ -15,7 +15,7 @@ spec:
         adminPassword: admin
         image:
           repository: grafana/grafana
-          tag: "8.3.5"
+          tag: "9.1.5"
         datasources:
            datasources.yaml:
              apiVersion: 1
@@ -28,7 +28,11 @@ spec:
              - name: Loki
                type: loki         
                url: http://loki-stack:3100
-               access: proxy             
+               access: proxy
+             - name: Tempo
+               type: tempo         
+               url: http://tempo:3100
+               access: proxy                        
         ingress:
           enabled: true
           annotations:
