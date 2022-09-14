@@ -32,23 +32,11 @@ $ kind create cluster --config kind/cluster.yaml
 $ kustomize build manifests/infra/ingress-controller/base | kubectl apply -f -
 ```
 
-Deploy test resources
+`/etc/hosts`
 
 ```
-$ kustomize build manifests/infra/ingress/base | kubectl apply -f -
-```
-
-
-```
-curl -I http://localhost                                                                                       ?main
-HTTP/1.1 200 OK
-Date: Sat, 10 Sep 2022 23:31:40 GMT
-Content-Type: text/html
-Content-Length: 615
-Connection: keep-alive
-Last-Modified: Tue, 19 Jul 2022 14:05:27 GMT
-ETag: "62d6ba27-267"
-Accept-Ranges: bytes
+127.0.0.1 argocd.local.com
+127.0.0.1 grafana.local.com
 ```
 
 ## Install Prometheus + Grafana with Operator (Optional)
@@ -56,24 +44,7 @@ Accept-Ranges: bytes
 use [kube-prometheus](https://github.com/prometheus-operator/kube-prometheus)
 
 ```
-$ kustomize build manifests/infra/prometheus-operator-setup/base | k create -f -
-```
-
-> Note: Get an error, so I use the create subcommand instead.
-> ```
-> The CustomResourceDefinition "prometheuses.monitoring.coreos.com" is invalid: metadata.annotations: Too long: must have at most 262144 bytes
-> ```
-
-
-```
-$ kubectl wait \
-	--for condition=Established \
-	--all CustomResourceDefinition \
-	--namespace=monitoring
-```    
-
-```
-$ kustomize build manifests/infra/prometheus-operator/overlays/local | k apply -f -
+$ kustomize build manifests/infra/prometheus-operator/overlays/local | k create -f -
 ```
 
 ## Install ArgoCD (Optional)
