@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: loki-stack
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/grafana/helm-charts.git
+    targetRevision: main
+    path: charts/loki-stack
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: monitoring
+
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+    - Validate=true
+    - CreateNamespace=true

@@ -15,7 +15,7 @@ spec:
         adminPassword: admin
         image:
           repository: grafana/grafana
-          tag: "9.1.5"
+          tag: "8.3.5"
         datasources:
            datasources.yaml:
              apiVersion: 1
@@ -25,6 +25,10 @@ spec:
                url: http://prometheus-server
                access: proxy
                isDefault: true
+             - name: Loki
+               type: loki         
+               url: http://loki-stack:3100
+               access: proxy             
         ingress:
           enabled: true
           annotations:

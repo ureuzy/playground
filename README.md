@@ -32,11 +32,30 @@ $ kind create cluster --config kind/cluster.yaml
 $ kustomize build manifests/init/ingress-controller/base | kubectl apply -f -
 ```
 
+wait up for controller
+
+```
+$ kubectl wait --namespace ingress-nginx \
+  --for=condition=ready pod \
+  --selector=app.kubernetes.io/component=controller \
+  --timeout=120s
+```  
+
 ## Install ArgoCD
 
 ```
 $ kustomize build manifests/init/argocd/base | k apply -f -
 ```
+
+wait up for argo-server
+
+```
+kubectl wait --namespace argocd \
+  --for=condition=ready pod \
+  --selector=app.kubernetes.io/name=argocd-server \
+  --timeout=120s
+```
+
 
 `/etc/hosts`
 
@@ -75,4 +94,10 @@ $ kubectl apply -f manifests/argo-apps/prometheus/application.yaml
 
 ```
 $ kubectl apply -f manifests/argo-apps/grafana/application.yaml
+```
+
+### Install loki-stack
+
+```
+$ kubectl apply -f manifests/argo-apps/loki-stack/application.yaml
 ```
