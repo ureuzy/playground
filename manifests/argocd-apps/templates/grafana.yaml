@@ -4,6 +4,9 @@ metadata:
   name: grafana
   namespace: argocd
 spec:
+  destination:
+    server: {{ .Values.spec.destination.server }}
+    namespace: monitoring
   project: default
   source:
     repoURL: https://github.com/grafana/helm-charts.git
@@ -42,10 +45,6 @@ spec:
           pathType: Prefix
           hosts:
             - grafana.local.com
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: monitoring
-
   syncPolicy:
     automated:
       prune: true

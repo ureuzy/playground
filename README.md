@@ -14,10 +14,10 @@ Install tools
 
 clone repository
 ```
-git clone git@github.com:ureuzy/my_local_cluster_setup.git
+$ git clone git@github.com:ureuzy/my_local_cluster_setup.git
 ```
 
-# Boot Cluster
+# Create Cluster
 
 ```
 $ kind create cluster --config kind/cluster.yaml
@@ -25,11 +25,10 @@ $ kind create cluster --config kind/cluster.yaml
 
 # Setup
 
-
 ## Install Nginx Ingress Controller
 
 ```
-$ kustomize build manifests/init/ingress-controller/base | kubectl apply -f -
+$ kustomize build manifests/ingress-nginx/base | kubectl apply -f -
 ```
 
 wait up for controller
@@ -44,18 +43,17 @@ $ kubectl wait --namespace ingress-nginx \
 ## Install ArgoCD
 
 ```
-$ kustomize build manifests/init/argocd/base | k apply -f -
+$ kustomize build manifests/argocd/base | k apply -f -
 ```
 
 wait up for argo-server
 
 ```
-kubectl wait --namespace argocd \
+$ kubectl wait --namespace argocd \
   --for=condition=ready pod \
   --selector=app.kubernetes.io/name=argocd-server \
   --timeout=120s
 ```
-
 
 `/etc/hosts`
 
@@ -69,35 +67,15 @@ argocd-ui default user is `admin`, get password execute below command
 $ kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
 ```
 
+## Install all templates
 
-## Monitoring
-
-### Install Prometheus
+```
+$ kubectl apply -f manifests/argocd/applications.yaml
+```
 
 `/etc/hosts`
 
 ```
 127.0.0.1 prometheus.local.com
-```
-
-```
-$ kubectl apply -f manifests/argo-apps/prometheus/application.yaml
-```
-
-### Install Grafana
-
-`/etc/hosts`
-
-```
 127.0.0.1 grafana.local.com
-```
-
-```
-$ kubectl apply -f manifests/argo-apps/grafana/application.yaml
-```
-
-### Install loki-stack
-
-```
-$ kubectl apply -f manifests/argo-apps/loki-stack/application.yaml
 ```

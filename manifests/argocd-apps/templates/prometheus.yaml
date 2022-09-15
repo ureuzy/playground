@@ -4,6 +4,9 @@ metadata:
   name: prometheus
   namespace: argocd
 spec:
+  destination:
+    server: {{ .Values.spec.destination.server }}
+    namespace: monitoring
   project: default
   source:
     repoURL: https://github.com/prometheus-community/helm-charts.git
@@ -20,10 +23,6 @@ spec:
             path: /
             hosts:
               - prometheus.local.com
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: monitoring
-
   syncPolicy:
     automated:
       prune: true
