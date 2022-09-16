@@ -23,6 +23,14 @@ spec:
             path: /
             hosts:
               - prometheus.local.com
+        extraScrapeConfigs: |
+          - job_name: 'argocd-metrics'
+            metrics_path: /metrics
+            params:
+              module: [http_2xx]
+            static_configs:
+              - targets:
+                - argocd-metrics.argocd.svc.cluster.local:8082
   syncPolicy:
     automated:
       prune: true
