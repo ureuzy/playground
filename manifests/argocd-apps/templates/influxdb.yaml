@@ -16,6 +16,15 @@ spec:
       values: |
         image:
           tag: "1.8.10"
+        initScripts:
+          enabled: true
+          scripts:
+            init.iql: |+
+              CREATE DATABASE "prometheus" WITH DURATION 30d REPLICATION 1 NAME "rp_30d"
+        setDefaultUser:
+          enabled: true
+          username: "admin"
+          password: "admin"
   syncPolicy:
     automated:
       prune: true
