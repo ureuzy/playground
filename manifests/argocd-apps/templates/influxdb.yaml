@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: influxdb
+  namespace: argocd
+spec:
+  destination:
+    server: {{ .Values.spec.destination.server }}
+    namespace: monitoring
+  project: default
+  source:
+    repoURL: https://github.com/influxdata/helm-charts
+    targetRevision: influxdb-4.12.0
+    path: charts/influxdb
+    helm:
+      values: |
+        image:
+          tag: "1.8.10"
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+    - Validate=true
+    - CreateNamespace=true
