@@ -19,6 +19,8 @@ spec:
         image:
           repository: grafana/grafana
           tag: "9.1.5"
+        plugins:
+        - magnesium-wordcloud-panel
         datasources:
            datasources.yaml:
              apiVersion: 1
@@ -35,7 +37,15 @@ spec:
              - name: Tempo
                type: tempo         
                url: http://tempo:3100
-               access: proxy                        
+               access: proxy
+             - name: InfluxDB
+               type: influxdb         
+               url: http://influxdb:8086
+               access: proxy  
+               database: prometheus
+               user: admin
+               secureJsonData:
+                 password: admin                                   
         ingress:
           enabled: true
           annotations:
