@@ -1,22 +1,21 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: loki-stack
+  annotations:
+  name: grafana-dashboards
   namespace: argocd
   finalizers:
-    - resources-finalizer.argocd.argoproj.io  
+    - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
     server: {{ .Values.spec.destination.server }}
     namespace: monitoring
   project: default
   source:
-    repoURL: https://grafana.github.io/helm-charts
-    chart: loki-stack
-    targetRevision: 2.8.3
+    repoURL: https://github.com/ureuzy/playground.git
+    path: manifests/dashboards
+    targetRevision: HEAD
   syncPolicy:
     automated:
       prune: true
-    syncOptions:
-    - Validate=true
-    - CreateNamespace=true
+      selfHeal: true

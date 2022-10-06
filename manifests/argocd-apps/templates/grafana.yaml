@@ -3,15 +3,17 @@ kind: Application
 metadata:
   name: grafana
   namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io  
 spec:
   destination:
     server: {{ .Values.spec.destination.server }}
     namespace: monitoring
   project: default
   source:
-    repoURL: https://github.com/grafana/helm-charts.git
-    targetRevision: main
-    path: charts/grafana
+    repoURL: https://grafana.github.io/helm-charts
+    chart: grafana
+    targetRevision: 6.40.0
     helm:
       values: |
         adminUser: admin
@@ -45,7 +47,10 @@ spec:
                database: prometheus
                user: admin
                secureJsonData:
-                 password: admin                                   
+                 password: admin 
+        sidecar:
+          dashboards:
+            enabled: true                                                   
         ingress:
           enabled: true
           annotations:

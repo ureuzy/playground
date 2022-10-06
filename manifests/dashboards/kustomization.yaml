@@ -1,0 +1,9 @@
+generatorOptions:
+  disableNameSuffixHash: true
+  labels:
+    grafana_dashboard: "true"
+namespace: monitoring
+
+configMapGenerator:
+  - name: word-cloud
+    files: [ word-cloud.json ]
