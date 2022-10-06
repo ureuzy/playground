@@ -35,7 +35,13 @@ spec:
             static_configs:
               - targets:
                 - argocd-metrics.argocd.svc.cluster.local:8082
-        
+          - job_name: 'word-cloud-metrics'
+            metrics_path: /metrics
+            params:
+              module: [http_2xx]
+            static_configs:
+              - targets:
+                - wordcloud-exporter:2112
   syncPolicy:
     automated:
       prune: true
