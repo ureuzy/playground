@@ -14,7 +14,7 @@ Install tools
 
 clone repository
 ```
-$ git clone git@github.com:ureuzy/my_local_cluster_setup.git
+$ git clone git@github.com:ureuzy/playground.git
 ```
 
 # Create Cluster
