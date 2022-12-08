@@ -40,12 +40,6 @@ $ kubectl wait --namespace ingress-nginx \
   --timeout=120s
 ```
 
-## Contour
-
-```
-$ kustomize build manifests/ingress-controller/contour/base | kubectl apply -f -
-```
-
 
 # Setup ArgoCD
 
