@@ -16,7 +16,7 @@ spec:
     helm:
       values: |
         config:
-          logLevel: debug
+          logLevel: info
           logFormat: pretty
           receivers:
             - name: slack
@@ -25,28 +25,29 @@ spec:
                 layout:
                   attachments:
                     - color: "#D00000"
-                      fields:
-                        - title: "Message"
-                          value: "{{ `{{ .Message }}` }}"
-                        - title: "FirstTimestamp"
-                          value: "{{ `{{ .FirstTimestamp }}` }}"        
-                        - title: "Namespace"
-                          value: "{{ `{{ .Namespace }}` }}"
-                          short: true
-                        - title: "Reason"
-                          value: "{{ `{{ .Reason }}` }}"
-                          short: true
-                        - title: "Kind"
-                          value: "{{ `{{ .InvolvedObject.Kind }}` }}"
-                          short: true
-                        - title: "Object"
-                          value: "{{ `{{ .InvolvedObject.Name }}` }}"
-                          short: true
+                      blocks:
+                        - type: "section"
+                          text:
+                            type: "mrkdwn"
+                            text: "*Message:*\n {{ `{{ .Message }}` }}"
+                        - type: "section"
+                          text:
+                            type: "mrkdwn"
+                            text: "*FirstTimestamp:*\n {{ `{{ .FirstTimestamp }}` }}"        
+                          fields:
+                            - type: "mrkdwn"
+                              text: "*Namespace:*\n {{ `{{ .Namespace }}` }}"
+                            - type: "mrkdwn"
+                              text: "*Reason:*\n {{ `{{ .Reason }}` }}"        
+                            - type: "mrkdwn"
+                              text: "*Kind:*\n {{ `{{ .InvolvedObject.Kind }}` }}"
+                            - type: "mrkdwn"
+                              text: "*Object:*\n {{ `{{ .InvolvedObject.Name }}` }}"   
           route:
             routes:
               - match:
                   - receiver: slack
-                    reason: "Created"
+                    reason: "OOMKilled"
   syncPolicy:
     automated:
       prune: true
