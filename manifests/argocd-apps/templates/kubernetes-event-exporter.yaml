@@ -20,20 +20,33 @@ spec:
           logFormat: pretty
           receivers:
             - name: slack
-              slack:
-                token: ${SLACK_TOKEN}
-                channel: memo
-                message: "{{ `{{ .Message }}` }}"
-                fields:
-                  namespace: "{{ `{{ .Namespace }}` }}"
-                  reason: "{{ `{{ .Reason }}` }}"
-                  kind: "{{ `{{ .InvolvedObject.Kind }}` }}"
-                  object: "{{ `{{ .InvolvedObject.Name }}` }}"
+              webhook:
+                endpoint: ${ENDPOINT}
+                layout:
+                  attachments:
+                    - color: "#D00000"
+                      fields:
+                        - title: "Message"
+                          value: "{{ `{{ .Message }}` }}"
+                        - title: "FirstTimestamp"
+                          value: "{{ `{{ .FirstTimestamp }}` }}"        
+                        - title: "Namespace"
+                          value: "{{ `{{ .Namespace }}` }}"
+                          short: true
+                        - title: "Reason"
+                          value: "{{ `{{ .Reason }}` }}"
+                          short: true
+                        - title: "Kind"
+                          value: "{{ `{{ .InvolvedObject.Kind }}` }}"
+                          short: true
+                        - title: "Object"
+                          value: "{{ `{{ .InvolvedObject.Name }}` }}"
+                          short: true
           route:
             routes:
               - match:
                   - receiver: slack
-                    reason: "OOMKilled"
+                    reason: "Created"
   syncPolicy:
     automated:
       prune: true
