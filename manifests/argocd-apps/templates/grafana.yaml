@@ -47,7 +47,25 @@ spec:
                database: prometheus
                user: admin
                secureJsonData:
-                 password: admin 
+                 password: admin
+        dashboardProviders:
+          dashboardproviders.yaml:
+            apiVersion: 1
+            providers:
+            - name: 'default'
+              orgId: 1
+              folder: ''
+              type: file
+              disableDeletion: false
+              editable: true
+              options:
+                path: /var/lib/grafana/dashboards/default
+        dashboards:
+          default:
+            Kubernetes:
+              gnetId: 15758
+              revision: 26
+              datasource: Prometheus            
         sidecar:
           dashboards:
             enabled: true                                                   
