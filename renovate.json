@@ -2,5 +2,14 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:base"
-  ]
+  ],
+  "kubernetes": {
+    "fileMatch": [
+      "kind/.+\\.yaml$",
+      "manifests/.+\\.yaml$"
+    ]
+  },
+  "argocd": {
+    "fileMatch": ["manifests/.+\\.yaml$"]
+  }
 }
