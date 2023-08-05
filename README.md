@@ -8,8 +8,8 @@ Install tools
 
 - [Install Docker](https://www.docker.com/) 
 - [Install kind](https://kind.sigs.k8s.io/)
-- [Install kubectl](https://kubernetes.io/ja/docs/tasks/tools/install-kubectl/)  
-- [Install kustomize](https://kubectl.docs.kubernetes.io/installation/kustomize/)
+- [Install kubectl](https://kubernetes.io/ja/docs/tasks/tools/install-kubectl/)
+- [Install argocd](https://argo-cd.readthedocs.io/en/stable/cli_installation/)
 
 
 clone repository
@@ -28,7 +28,7 @@ $ kind create cluster --config kind/cluster.yaml
 ## Ingress NGINX
 
 ```
-$ kustomize build manifests/ingress-controller/nginx/base | kubectl apply -f -
+$ kubectl kustomize manifests/ingress-controller/nginx/base | kubectl apply -f -
 ```
 
 wait up for controller
@@ -44,7 +44,7 @@ $ kubectl wait --namespace ingress-nginx \
 # Setup ArgoCD
 
 ```
-$ kustomize build manifests/argocd/base | k apply -f -
+$ kubectl kustomize manifests/argocd/base | kubectl apply -f -
 ```
 
 wait up for argo-server
@@ -66,6 +66,14 @@ argocd-ui default user is `admin`, get password execute below command
 
 ```
 $ kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+```
+
+Login with argo cli and add the repository to be synchronized
+
+```
+ARGO_PASS=`kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d`
+argocd login argocd.local --insecure --username admin --password ${ARGO_PASS} --insecure
+argocd repo add https://github.com/ureuzy/playground.git --project default
 ```
 
 ## Install all templates
