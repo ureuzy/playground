@@ -10,7 +10,7 @@ metadata:
   namespace: argocd
 spec:
   rules:
-  - host: argocd.local.com
+  - host: argocd.local
     http:
       paths:
       - path: /

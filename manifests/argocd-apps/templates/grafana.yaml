@@ -59,7 +59,7 @@ spec:
           path: /
           pathType: Prefix
           hosts:
-            - grafana.local.com
+            - grafana.local
   syncPolicy:
     automated:
       prune: true

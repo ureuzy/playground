@@ -59,7 +59,7 @@ $ kubectl wait --namespace argocd \
 `/etc/hosts`
 
 ```
-127.0.0.1 argocd.local.com
+127.0.0.1 argocd.local
 ```
 
 argocd-ui default user is `admin`, get password execute below command
@@ -77,6 +77,6 @@ $ kubectl apply -f manifests/argocd/applications.yaml
 `/etc/hosts`
 
 ```
-127.0.0.1 prometheus.local.com
-127.0.0.1 grafana.local.com
+127.0.0.1 prometheus.local
+127.0.0.1 grafana.local
 ```

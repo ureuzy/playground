@@ -1,7 +1,6 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  annotations:
   name: grafana-dashboards
   namespace: argocd
   finalizers:

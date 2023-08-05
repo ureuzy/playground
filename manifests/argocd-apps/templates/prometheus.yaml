@@ -24,7 +24,7 @@ spec:
             enabled: true
             path: /
             hosts:
-              - prometheus.local.com
+              - prometheus.local
           remoteWrite: 
           - url: "http://influxdb:8086/api/v1/prom/write?db=prometheus"
           remoteRead:
