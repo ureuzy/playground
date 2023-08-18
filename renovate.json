@@ -11,5 +11,17 @@
   },
   "argocd": {
     "fileMatch": ["manifests/.+\\.yaml$"]
-  }
+  },
+  "packageRules": [
+    {
+      "groupName": "kubernetes",
+      "matchManagers": ["asdf"],
+      "matchPackageNames": ["kubectl"]
+    },
+    {
+      "groupName": "kubernetes",
+      "matchManagers": ["kubernetes"],
+      "matchPackageNames": ["kindest/node"]
+    }
+  ]
 }
