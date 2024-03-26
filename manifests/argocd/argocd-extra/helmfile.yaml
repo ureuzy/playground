@@ -1,0 +1,7 @@
+releases:
+  - name: argocd-extra
+    namespace: argocd
+    chart: ./charts
+    version: main
+    values:
+      - values.yaml
