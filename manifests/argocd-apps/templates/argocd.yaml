@@ -11,9 +11,9 @@ spec:
     namespace: argocd
   project: default
   source:
-    repoURL: https://github.com/ureuzy/playground.git
-    path: manifests/argocd/base
-    targetRevision: HEAD
+    repoURL: https://argoproj.github.io/argo-helm
+    chart: argo-cd
+    targetRevision: 6.6.0
   syncPolicy:
     automated:
       selfHeal: true
