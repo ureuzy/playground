@@ -1,35 +1,35 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: influxdb
-  namespace: argocd
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io  
-spec:
-  destination:
-    server: {{ .Values.spec.destination.server }}
-    namespace: monitoring
-  project: default
-  source:
-    repoURL: https://github.com/influxdata/helm-charts
-    targetRevision: influxdb-4.12.0
-    path: charts/influxdb
-    helm:
-      values: |
-        image:
-          tag: "1.8.10"
-        initScripts:
-          enabled: true
-          scripts:
-            init.iql: |+
-              CREATE DATABASE "prometheus" WITH DURATION 30d REPLICATION 1 NAME "rp_30d"
-        setDefaultUser:
-          enabled: true
-          username: "admin"
-          password: "admin"
-  syncPolicy:
-    automated:
-      prune: true
-    syncOptions:
-    - Validate=true
-    - CreateNamespace=true
+#apiVersion: argoproj.io/v1alpha1
+#kind: Application
+#metadata:
+#  name: influxdb
+#  namespace: argocd
+#  finalizers:
+#    - resources-finalizer.argocd.argoproj.io
+#spec:
+#  destination:
+#    server: {{ .Values.spec.destination.server }}
+#    namespace: monitoring
+#  project: default
+#  source:
+#    repoURL: https://github.com/influxdata/helm-charts
+#    targetRevision: influxdb-4.12.0
+#    path: charts/influxdb
+#    helm:
+#      values: |
+#        image:
+#          tag: "1.8.10"
+#        initScripts:
+#          enabled: true
+#          scripts:
+#            init.iql: |+
+#              CREATE DATABASE "prometheus" WITH DURATION 30d REPLICATION 1 NAME "rp_30d"
+#        setDefaultUser:
+#          enabled: true
+#          username: "admin"
+#          password: "admin"
+#  syncPolicy:
+#    automated:
+#      prune: true
+#    syncOptions:
+#    - Validate=true
+#    - CreateNamespace=true

@@ -1,27 +1,27 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: tempo
-  namespace: argocd
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io  
-spec:
-  destination:
-    server: {{ .Values.spec.destination.server }}
-    namespace: monitoring
-  project: default
-  source:
-    repoURL: https://github.com/grafana/helm-charts.git
-    targetRevision: main
-    path: charts/tempo
-    helm:
-      values: |
-        tempo:
-          repository: grafana/tempo
-          tag: 1.5.0
-  syncPolicy:
-    automated:
-      prune: true
-    syncOptions:
-    - Validate=true
-    - CreateNamespace=true
+#apiVersion: argoproj.io/v1alpha1
+#kind: Application
+#metadata:
+#  name: tempo
+#  namespace: argocd
+#  finalizers:
+#    - resources-finalizer.argocd.argoproj.io
+#spec:
+#  destination:
+#    server: {{ .Values.spec.destination.server }}
+#    namespace: monitoring
+#  project: default
+#  source:
+#    repoURL: https://github.com/grafana/helm-charts.git
+#    targetRevision: main
+#    path: charts/tempo
+#    helm:
+#      values: |
+#        tempo:
+#          repository: grafana/tempo
+#          tag: 1.5.0
+#  syncPolicy:
+#    automated:
+#      prune: true
+#    syncOptions:
+#    - Validate=true
+#    - CreateNamespace=true

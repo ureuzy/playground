@@ -23,28 +23,10 @@ $ git clone git@github.com:ureuzy/playground.git
 $ kind create cluster --config kind/cluster.yaml
 ```
 
-# Setup Ingress Controller
-
-## Ingress NGINX
-
-```
-$ kubectl kustomize manifests/ingress-controller/nginx/base | kubectl apply -f -
-```
-
-wait up for controller
-
-```
-$ kubectl wait --namespace ingress-nginx \
-  --for=condition=ready pod \
-  --selector=app.kubernetes.io/component=controller \
-  --timeout=120s
-```
-
-
 # Setup ArgoCD
 
 ```
-$ kubectl kustomize manifests/argocd/base | kubectl apply -f -
+$ helm install -n argocd argocd argo/argo-cd --create-namespace
 ```
 
 wait up for argo-server

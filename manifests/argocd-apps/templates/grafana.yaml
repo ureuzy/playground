@@ -1,86 +1,86 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: grafana
-  namespace: argocd
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io  
-spec:
-  destination:
-    server: {{ .Values.spec.destination.server }}
-    namespace: monitoring
-  project: default
-  source:
-    repoURL: https://grafana.github.io/helm-charts
-    chart: grafana
-    targetRevision: 7.3.3
-    helm:
-      values: |
-        adminUser: admin
-        adminPassword: admin
-        image:
-          repository: grafana/grafana
-          tag: "9.1.5"
-        plugins:
-        - magnesium-wordcloud-panel
-        datasources:
-           datasources.yaml:
-             apiVersion: 1
-             datasources:
-             - name: Prometheus
-               type: prometheus         
-               url: http://prometheus-server
-               access: proxy
-               isDefault: true
-             - name: Loki
-               type: loki         
-               url: http://loki-stack:3100
-               access: proxy
-             - name: Tempo
-               type: tempo         
-               url: http://tempo:3100
-               access: proxy
-             - name: InfluxDB
-               type: influxdb         
-               url: http://influxdb:8086
-               access: proxy  
-               database: prometheus
-               user: admin
-               secureJsonData:
-                 password: admin
-        dashboardProviders:
-          dashboardproviders.yaml:
-            apiVersion: 1
-            providers:
-            - name: 'default'
-              orgId: 1
-              folder: ''
-              type: file
-              disableDeletion: false
-              editable: true
-              options:
-                path: /var/lib/grafana/dashboards/default
-        dashboards:
-          default:
-            Kubernetes:
-              gnetId: 15758
-              revision: 26
-              datasource: Prometheus            
-        sidecar:
-          dashboards:
-            enabled: true                                                   
-        ingress:
-          enabled: true
-          annotations:
-            kubernetes.io/ingress.class: nginx
-            nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
-          path: /
-          pathType: Prefix
-          hosts:
-            - grafana.local
-  syncPolicy:
-    automated:
-      prune: true
-    syncOptions:
-    - Validate=true
-    - CreateNamespace=true
+#apiVersion: argoproj.io/v1alpha1
+#kind: Application
+#metadata:
+#  name: grafana
+#  namespace: argocd
+#  finalizers:
+#    - resources-finalizer.argocd.argoproj.io
+#spec:
+#  destination:
+#    server: {{ .Values.spec.destination.server }}
+#    namespace: monitoring
+#  project: default
+#  source:
+#    repoURL: https://grafana.github.io/helm-charts
+#    chart: grafana
+#    targetRevision: 7.3.3
+#    helm:
+#      values: |
+#        adminUser: admin
+#        adminPassword: admin
+#        image:
+#          repository: grafana/grafana
+#          tag: "9.1.5"
+#        plugins:
+#        - magnesium-wordcloud-panel
+#        datasources:
+#           datasources.yaml:
+#             apiVersion: 1
+#             datasources:
+#             - name: Prometheus
+#               type: prometheus
+#               url: http://prometheus-server
+#               access: proxy
+#               isDefault: true
+#             - name: Loki
+#               type: loki
+#               url: http://loki-stack:3100
+#               access: proxy
+#             - name: Tempo
+#               type: tempo
+#               url: http://tempo:3100
+#               access: proxy
+#             - name: InfluxDB
+#               type: influxdb
+#               url: http://influxdb:8086
+#               access: proxy
+#               database: prometheus
+#               user: admin
+#               secureJsonData:
+#                 password: admin
+#        dashboardProviders:
+#          dashboardproviders.yaml:
+#            apiVersion: 1
+#            providers:
+#            - name: 'default'
+#              orgId: 1
+#              folder: ''
+#              type: file
+#              disableDeletion: false
+#              editable: true
+#              options:
+#                path: /var/lib/grafana/dashboards/default
+#        dashboards:
+#          default:
+#            Kubernetes:
+#              gnetId: 15758
+#              revision: 26
+#              datasource: Prometheus
+#        sidecar:
+#          dashboards:
+#            enabled: true
+#        ingress:
+#          enabled: true
+#          annotations:
+#            kubernetes.io/ingress.class: nginx
+#            nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+#          path: /
+#          pathType: Prefix
+#          hosts:
+#            - grafana.local
+#  syncPolicy:
+#    automated:
+#      prune: true
+#    syncOptions:
+#    - Validate=true
+#    - CreateNamespace=true
