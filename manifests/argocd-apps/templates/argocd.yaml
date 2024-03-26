@@ -28,7 +28,35 @@ spec:
                     - bash
                     - "-c"
                   args:
-                    - helmfile -q template --include-crds --skip-tests
+                    - helmfile template -q --namespace $ARGOCD_APP_NAMESPACE --include-crds
+        repoServer:
+          extraContainers:
+            - name: cmp-helmfile
+              securityContext:
+                runAsNonRoot: true
+                runAsUser: 999
+              image: ghcr.io/helmfile/helmfile:v0.157.0
+              imagePullPolicy: IfNotPresent
+              command: [/var/run/argocd/argocd-cmp-server]
+              volumeMounts:
+                - mountPath: /var/run/argocd
+                  name: var-files
+                - mountPath: /home/argocd/cmp-server/plugins
+                  name: plugins
+                - mountPath: /home/argocd/cmp-server/config/plugin.yaml
+                  subPath: plugin.yaml
+                  name: argocd-cmp-cm
+                - mountPath: /tmp
+                  name: cmp-tmp
+          volumes:
+            - name: argocd-cmp-cm
+              configMap:
+                name: argocd-cmp-cm
+                items:
+                  - key: helmfile.yaml
+                    path: plugin.yaml
+            - emptyDir: {}
+              name: cmp-tmp
   syncPolicy:
     automated:
       selfHeal: true
