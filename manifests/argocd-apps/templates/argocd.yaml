@@ -11,6 +11,11 @@ spec:
     namespace: argocd
   project: default
   source:
+#    repoURL: https://github.com/ureuzy/playground.git
+#    path: manifests/argocd
+#    targetRevision: HEAD
+#    plugin:
+#      name: helmfile
     repoURL: https://argoproj.github.io/argo-helm
     chart: argo-cd
     targetRevision: 6.6.0
@@ -35,7 +40,7 @@ spec:
               securityContext:
                 runAsNonRoot: true
                 runAsUser: 999
-              image: ghcr.io/helmfile/helmfile:v0.157.0
+              image: ghcr.io/helmfile/helmfile:v0.162.0
               imagePullPolicy: IfNotPresent
               command: [/var/run/argocd/argocd-cmp-server]
               volumeMounts:
