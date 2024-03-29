@@ -1,0 +1,4 @@
+releases:
+  - name: grafana-extra
+    namespace: monitoring
+    chart: ./dashboards

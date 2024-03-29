@@ -1,20 +1,21 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: argocd-apps
+  name: argocd
   namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io  
 spec:
   destination:
-    server: https://kubernetes.default.svc
+    server: {{ .Values.spec.destination.server }}
     namespace: argocd
   project: default
   source:
     repoURL: https://github.com/ureuzy/playground.git
-    path: manifests/argocd-apps/
-    targetRevision: main
+    path: manifests/argocd
+    targetRevision: HEAD
+    plugin:
+      name: helmfile
   syncPolicy:
-    syncOptions:
-      - CreateNamespace=false
     automated:
-      prune: true
-      selfHeal: false
+      selfHeal: true

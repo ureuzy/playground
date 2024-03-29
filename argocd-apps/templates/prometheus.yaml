@@ -1,0 +1,47 @@
+#apiVersion: argoproj.io/v1alpha1
+#kind: Application
+#metadata:
+#  name: prometheus
+#  namespace: argocd
+#  finalizers:
+#    - resources-finalizer.argocd.argoproj.io
+#spec:
+#  destination:
+#    server: {{ .Values.spec.destination.server }}
+#    namespace: monitoring
+#  project: default
+#  source:
+#    repoURL: https://github.com/prometheus-community/helm-charts.git
+#    targetRevision: kube-prometheus-stack-40.0.0
+#    path: charts/prometheus
+#    helm:
+#      values: |
+#        server:
+#          image:
+#            repository: quay.io/prometheus/prometheus
+#            tag: v2.36.2
+#          remoteWrite:
+#          - url: "http://influxdb:8086/api/v1/prom/write?db=prometheus"
+#          remoteRead:
+#          - url: "http://influxdb:8086/api/v1/prom/read?db=prometheus"
+#        extraScrapeConfigs: |
+#          - job_name: 'argocd-metrics'
+#            metrics_path: /metrics
+#            params:
+#              module: [http_2xx]
+#            static_configs:
+#              - targets:
+#                - argocd-metrics.argocd.svc.cluster.local:8082
+#          - job_name: 'word-cloud-metrics'
+#            metrics_path: /metrics
+#            params:
+#              module: [http_2xx]
+#            static_configs:
+#              - targets:
+#                - wordcloud-exporter:2112
+#  syncPolicy:
+#    automated:
+#      prune: true
+#    syncOptions:
+#    - Validate=true
+#    - CreateNamespace=true
