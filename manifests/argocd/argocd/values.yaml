@@ -30,6 +30,8 @@ repoServer:
           name: argocd-cmp-cm
         - mountPath: /tmp
           name: cmp-tmp
+        - mountPath: /helm
+          name: helm-config
   volumes:
     - name: argocd-cmp-cm
       configMap:
@@ -39,3 +41,5 @@ repoServer:
             path: plugin.yaml
     - emptyDir: {}
       name: cmp-tmp
+    - emptyDir: {}
+      name: helm-config
