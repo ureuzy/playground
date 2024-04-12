@@ -5,6 +5,10 @@ metadata:
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
+  annotations:
+    argocd-image-updater.argoproj.io/write-back-method: git
+    argocd-image-updater.argoproj.io/git-branch: test
+    argocd-image-updater.argoproj.io/image-list: grafana
 spec:
   destination:
     server: {{ .Values.spec.destination.server }}
