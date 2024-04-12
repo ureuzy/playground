@@ -7,6 +7,7 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
   annotations:
     argocd-image-updater.argoproj.io/write-back-method: git
+    argocd-image-updater.argoproj.io/git-branch: test
 spec:
   destination:
     server: {{ .Values.spec.destination.server }}
