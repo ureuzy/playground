@@ -1,3 +1,16 @@
-helmfiles:
-  - path: ./argocd/helmfile.yaml
-  - path: ./argocd-extra/helmfile.yaml
+repositories:
+  - name: argo
+    url: https://argoproj.github.io/argo-helm
+releases:
+  - name: argocd
+    namespace: argocd
+    chart: argo/argo-cd
+    version: 6.6.0
+    values:
+      - argocd/values.yaml
+  - name: argocd-extra
+    namespace: argocd
+    chart: ./argocd-extra
+    version: 6.6.0
+    values:
+      - argocd-extra/values.yaml

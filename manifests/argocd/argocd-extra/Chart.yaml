@@ -1,5 +1,5 @@
 apiVersion: v2
-name: argocd-append
+name: argocd-extra
 description: A Helm charts for Kubernetes
 
 # A charts can be either an 'application' or a 'library' charts.
