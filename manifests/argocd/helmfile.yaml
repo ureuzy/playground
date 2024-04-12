@@ -11,6 +11,5 @@ releases:
   - name: argocd-extra
     namespace: argocd
     chart: ./argocd-extra
-    version: 6.6.0
     values:
       - argocd-extra/values.yaml
