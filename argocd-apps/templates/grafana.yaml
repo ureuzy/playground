@@ -8,7 +8,7 @@ metadata:
   annotations:
     argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
     argocd-image-updater.argoproj.io/git-branch: test
-    argocd-image-updater.argoproj.io/image-list: grafana
+    argocd-image-updater.argoproj.io/image-list: docker.io/grafana/grafana
 spec:
   destination:
     server: {{ .Values.spec.destination.server }}
@@ -23,7 +23,6 @@ spec:
         adminUser: admin
         adminPassword: admin
         image:
-          repository: grafana/grafana
           tag: "9.1.5"
         plugins:
         - magnesium-wordcloud-panel
