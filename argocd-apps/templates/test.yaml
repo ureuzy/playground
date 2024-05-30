@@ -14,6 +14,9 @@ spec:
     repoURL: https://github.com/ureuzy/playground.git
     path: manifests/test
     targetRevision: HEAD
+    helm:
+      valueFiles:
+        - /values/test.yaml
   syncPolicy:
     automated:
       selfHeal: true

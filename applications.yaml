@@ -12,6 +12,9 @@ spec:
     repoURL: https://github.com/ureuzy/playground.git
     path: argocd-apps
     targetRevision: main
+    helm:
+      valueFiles:
+        - /values/argocd-apps.yaml
   syncPolicy:
     syncOptions:
       - CreateNamespace=false
