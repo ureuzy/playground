@@ -13,7 +13,7 @@ releases:
     chart: argo/argocd-image-updater
     version: 0.9.6
     values:
-      - argocd-image-updater/values.yaml
+      - ../../values/argocd-image-updater.yaml
   - name: argocd-extra
     namespace: argocd
     chart: ./argocd-extra
