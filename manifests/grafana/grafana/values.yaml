@@ -2,7 +2,7 @@ adminUser: admin
 adminPassword: admin
 image:
   repository: grafana/grafana
-  tag: "9.1.5"
+  tag: "9.5.21"
 plugins:
   - magnesium-wordcloud-panel
 datasources:
