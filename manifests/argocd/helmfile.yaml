@@ -5,7 +5,7 @@ releases:
   - name: argocd
     namespace: argocd
     chart: argo/argo-cd
-    version: 6.6.0
+    version: 6.11.1
     values:
       - argocd/values.yaml
   - name: argocd-image-updater
